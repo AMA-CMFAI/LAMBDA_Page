@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Installation Guide: Deploy LAMBDA Locally from Scratch – Zero-Code Data Analysis Agent</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23000000%22 rx=%2250%22/><text x=%2250%22 y=%2270%22 font-size=%2280%22 text-anchor=%22middle%22 fill=%22%23ffffff%22 font-weight=%22bold%22 font-family=%22-apple-system,BlinkMacSystemFont,Segoe UI,Roboto%22>Λ</text></svg>">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23000000%22 rx=%2250%22/><text x=%2250%22 y=%2270%22 font-size=%2280%22 text-anchor=%22middle%22 fill=%22%23ffffff%22 font-weight=%22bold%22 font-family=%22-apple-system,BlinkMacSystemFont,Segoe UI,Roboto%22>Λ</text></svg>">
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --text: #e0e0e0;
+      --card: rgba(30,30,30,0.7);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+    }
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      padding: 1.5rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      background: rgba(10,10,10,0.8);
+      backdrop-filter: blur(10px);
+    }
+    .logo { font-size: 1.8rem; font-weight: 800; letter-spacing: -1px; }
+    .back { color: #aaaaaa; text-decoration: none; font-weight: 500; }
+    .back:hover { color: white; }
+
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 10rem 5% 6rem;
+    }
+    h1 {
+      font-size: 3.2rem;
+      font-weight: 900;
+      margin-bottom: 0.4em;
+      color: white;
+    }
+    .meta {
+      color: #888888;
+      font-size: 1rem;
+      margin-bottom: 3rem;
+    }
+    article {
+      font-size: 1.15rem;
+    }
+    article h2, article h3 {
+      color: #ffffff;
+      margin: 2.5rem 0 1rem;
+    }
+    article p, article li {
+      margin-bottom: 1.4em;
+      opacity: 0.92;
+    }
+    article code {
+      background: #1e1e1e;
+      padding: 0.2em 0.5em;
+      border-radius: 4px;
+      font-family: 'Consolas', monospace;
+    }
+    article pre {
+      background: #111;
+      padding: 1.5rem;
+      border-radius: 12px;
+      overflow-x: auto;
+      margin: 1.5em 0;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">λ Blog</div>
+    <a href="../blog.html" class="back">← Return the blog list</a>
+  </header>
+
+  <main>
+
+    <article>
+  <h1>Installation Guide: Deploy LAMBDA Locally from Scratch – Zero-Code Data Analysis Agent</h1>
+
+  <div class="meta">January 10, 2026 · Approx. 12-minute read</div>
+
+  <p>LAMBDA is an open-source, multi-agent data analysis system powered by large language models. It allows anyone — even those without programming skills — to perform complex data science tasks simply by chatting in natural language (English or Chinese). No code writing required.</p>
+
+  <p>This comprehensive guide walks you through every step of installing and running LAMBDA locally on your machine. By the end, you'll have a fully functional instance running in your browser, ready to analyze Excel, CSV, or other tabular data.</p>
+
+  <h2>1. System Requirements & Prerequisites</h2>
+
+  <p>Before you begin, make sure your system meets these minimum requirements:</p>
+  <ul>
+    <li><strong>Operating System</strong>: Windows 10/11, macOS 11+, or Linux (Ubuntu 20.04+ recommended)</li>
+    <li><strong>Python</strong>: Version 3.10 or higher (3.11/3.12 preferred for best performance)</li>
+    <li><strong>RAM</strong>: At least 8GB (16GB+ strongly recommended if using local models)</li>
+    <li><strong>Disk Space</strong>: ~5–10GB free (for dependencies + model weights if using local LLMs)</li>
+    <li><strong>Internet</strong>: Required during installation (for downloading packages and models)</li>
+  </ul>
+
+  <h3>Step 1.1: Install Python</h3>
+
+  <p><strong>Windows</strong></p>
+  <ol>
+    <li>Go to <a href="https://www.python.org/downloads/" target="_blank">https://www.python.org/downloads/</a></li>
+    <li>Download the latest Python 3.10+ installer (64-bit recommended)</li>
+    <li>Run the installer and **important**: check the box “Add Python 3.x to PATH” at the bottom of the first screen</li>
+    <li>Click “Install Now” and wait for completion</li>
+    <li>Open Command Prompt (cmd) or PowerShell and verify:
+      <pre><code>python --version</code></pre>
+      You should see something like <code>Python 3.12.1</code>
+    </li>
+  </ol>
+
+  <p><strong>macOS</strong></p>
+  <ol>
+    <li>Recommended: Download the official installer from python.org</li>
+    <li>Alternative (if you have Homebrew installed):
+      <pre><code>brew install python@3.12</code></pre>
+    </li>
+    <li>Verify:
+      <pre><code>python3 --version</code></pre>
+    </li>
+  </ol>
+
+  <p><strong>Linux (Ubuntu/Debian example)</strong></p>
+  <pre><code>sudo apt update
+sudo apt install software-properties-common
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt update
+sudo apt install python3.12 python3.12-venv python3-pip</code></pre>
+
+  <h2>2. Clone the Repository</h2>
+
+  <p>Open your terminal (Command Prompt, Terminal.app, or any shell) and run:</p>
+  <pre><code>git clone https://github.com/AMA-CMFAI/LAMBDA.git
+cd LAMBDA</code></pre>
+
+  <p>If you don’t have Git installed:</p>
+  <ul>
+    <li>Windows: Download from <a href="https://git-scm.com/download/win" target="_blank">git-scm.com</a></li>
+    <li>macOS: <code>brew install git</code> or install from Xcode</li>
+    <li>Linux: <code>sudo apt install git</code></li>
+  </ul>
+
+  <h2>3. Create & Activate a Virtual Environment (Highly Recommended)</h2>
+
+  <p>Using a virtual environment prevents conflicts with other Python projects on your system.</p>
+
+  <p><strong>Option A: Conda (Best for beginners & managing large models)</strong></p>
+  <pre><code># If you don’t have Conda, download Miniconda from https://docs.conda.io/en/latest/miniconda.html
+conda create -n lambda python=3.12
+conda activate lambda</code></pre>
+
+  <p><strong>Option B: Built-in venv</strong></p>
+  <pre><code># macOS/Linux
+python3 -m venv lambda-env
+source lambda-env/bin/activate
+
+# Windows
+python -m venv lambda-env
+lambda-env\Scripts\activate</code></pre>
+
+  <p>After activation, your terminal prompt should show <code>(lambda)</code> or <code>(lambda-env)</code>.</p>
+
+  <h2>4. Install All Dependencies</h2>
+
+  <p>With the virtual environment activated, run:</p>
+  <pre><code>pip install -r requirements.txt</code></pre>
+
+  <p><strong>Tips for faster/smoother installation:</strong></p>
+  <ul>
+    <li>China users: Add a mirror <code>pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple</code></li>
+    <li>If you get errors about missing build tools (e.g., numpy, scipy): Install Microsoft Visual C++ Build Tools (Windows) or <code>sudo apt install build-essential</code> (Linux)</li>
+  </ul>
+
+  <h2>5. Register Jupyter Kernel (Critical for Code Execution)</h2>
+
+  <p>LAMBDA uses Jupyter as its secure code interpreter backend. Register a dedicated kernel:</p>
+  <pre><code>ipython kernel install --name lambda --user</code></pre>
+
+  <p>This command makes the “lambda” kernel available for safe, sandboxed code execution.</p>
+
+  <h2>6. Configure config.yaml – The Heart of LAMBDA</h2>
+
+  <p>In the project root, find and open <code>config.yaml</code> with any text editor (VS Code, Notepad++, etc.).</p>
+
+  <p>You have two main options for the language model backend:</p>
+
+  <h3>Option A: Cloud API (Fastest to start – OpenAI, Groq, Anthropic, etc.)</h3>
+  <pre><code>conv_model: "gpt-4o-mini"                # or "gpt-4o", "claude-3-5-sonnet-20241022", etc.
+programmer_model: "gpt-4o-mini"
+inspector_model: "gpt-4o-mini"
+
+api_key: "sk-your-openai-api-key-here"     # Get from https://platform.openai.com/account/api-keys
+
+base_url_conv_model: 'https://api.openai.com/v1'
+base_url_programmer: 'https://api.openai.com/v1'
+base_url_inspector: 'https://api.openai.com/v1'
+
+streaming: True
+max_attempts: 5
+max_exe_time: 18000</code></pre>
+
+  <h3>Option B: Local LLM (Free, private, unlimited – Highly recommended long-term)</h3>
+  <ol>
+    <li>Install Ollama: <a href="https://ollama.com/download" target="_blank">https://ollama.com/download</a></li>
+    <li>Pull a strong model (run in terminal):
+      <pre><code>ollama pull qwen2.5:14b
+# or ollama pull llama3.1:8b / deepseek-r1:14b etc.</code></pre>
+    </li>
+    <li>Configure config.yaml:
+      <pre><code>conv_model: "qwen2.5:14b"
+programmer_model: "qwen2.5:14b"
+inspector_model: "qwen2.5:14b"
+
+api_key: "ollama"
+base_url_conv_model: 'http://localhost:11434/v1'
+base_url_programmer: 'http://localhost:11434/v1'
+base_url_inspector: 'http://localhost:11434/v1'
+
+streaming: True</code></pre>
+    </li>
+  </ol>
+
+  <h2>7. Launch LAMBDA!</h2>
+
+  <p>Make sure Ollama is running (if using local model), then in the terminal:</p>
+  <pre><code>python lambda_app.py</code></pre>
+
+  <p>After a few seconds, you’ll see output like:</p>
+  <pre><code>Running on local URL:  http://127.0.0.1:7860</code></pre>
+
+  <p>Open that address in your browser. Upload a CSV/Excel file and start chatting:</p>
+  <blockquote>“Show me the sales trend by month”<br>
+  “Which product has the highest profit margin?”<br>
+  “Generate a full report with charts and insights”</blockquote>
+
+  <h2>Troubleshooting Common Issues</h2>
+  <ul>
+    <li><strong>“python not found”</strong> → Reinstall Python and check “Add to PATH”</li>
+    <li><strong>ModuleNotFoundError</strong> → Ensure you're in the virtual environment (<code>conda activate lambda</code> or <code>source lambda-env/bin/activate</code>)</li>
+    <li><strong>API rate limit / invalid key</strong> → Double-check your API key (no extra spaces)</li>
+    <li><strong>Ollama not responding</strong> → Run <code>ollama serve</code> in another terminal, ensure model is pulled</li>
+    <li><strong>Slow startup</strong> → First run downloads large files; subsequent launches are much faster</li>
+  </ul>
+
+  <p>Congratulations! You now have your own local LAMBDA instance.</p>
+
+  <p>Project GitHub: <a href="https://github.com/AMA-CMFAI/LAMBDA" target="_blank">https://github.com/AMA-CMFAI/LAMBDA</a><br>
+  Full Documentation: <a href="https://ama-cmfai.github.io/LAMBDA-Docs/#/" target="_blank">https://ama-cmfai.github.io/LAMBDA-Docs/</a></p>
+
+<!--  <p>Next article: Deep Dive into LAMBDA’s Dual-Agent System – How Programmer + Inspector Achieve Self-Correction and High Accuracy.</p>-->
+</article>
+  </main>
+
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LAMBDA – Zero-Code Data Analysis Agent</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23000000%22 rx=%2250%22/><text x=%2250%22 y=%2270%22 font-size=%2280%22 text-anchor=%22middle%22 fill=%22%23ffffff%22 font-weight=%22bold%22 font-family=%22-apple-system,BlinkMacSystemFont,Segoe UI,Roboto%22>Λ</text></svg>">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23000000%22 rx=%2250%22/><text x=%2250%22 y=%2270%22 font-size=%2280%22 text-anchor=%22middle%22 fill=%22%23ffffff%22 font-weight=%22bold%22 font-family=%22-apple-system,BlinkMacSystemFont,Segoe UI,Roboto%22>Λ</text></svg>">
+  <style>
+    :root {
+      --bg: #000000;
+      --text: #ffffff;
+      --accent: #aaaaaa;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    #bg-gif {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: url('sources/images/LAMBDA_mix_250710_large.gif') center center / cover no-repeat;
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    #bg-gif::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: inherit;
+      filter: blur(20px);
+      transform: scale(1.1);
+    }
+
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      padding: 2rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+    }
+    .logo {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -2px;
+    }
+    nav a {
+      color: var(--text);
+      text-decoration: none;
+      margin-left: 2.5rem;
+      font-weight: 500;
+      opacity: 0.8;
+      transition: opacity .3s;
+    }
+    nav a:hover { opacity: 1; }
+
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 10%;
+      position: relative;
+    }
+    .hero h1 {
+      font-size: 14vw;
+      font-weight: 900;
+      letter-spacing: -0.05em;
+      line-height: 0.9;
+      margin-bottom: 2rem;
+      background: linear-gradient(90deg, #fff, #aaa);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      max-width: 800px;
+      font-size: 1.5rem;
+      line-height: 1.6;
+      opacity: 0.8;
+      margin-bottom: 4rem;
+    }
+
+    .buttons a {
+      display: inline-block;
+      margin: 0 1rem;
+      padding: 1rem 2.5rem;
+      background: transparent;
+      border: 2px solid rgba(255,255,255,0.3);
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: all .4s;
+    }
+    .buttons a:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: white;
+    }
+
+    /* Floating circular images */
+    .floating-img {
+      position: absolute;
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 0 80px rgba(255,255,255,0.15);
+      animation: float 20s infinite linear;
+    }
+    .floating-img img { width: 100%; height: 100%; object-fit: cover; }
+    #img1 { width: 220px; height: 220px; top: 15%; left: 12%; }
+    #img2 { width: 180px; height: 180px; top: 20%; right: 15%; }
+    #img3 { width: 200px; height: 200px; bottom: 15%; left: 18%; animation-delay: -10s; }
+
+    @keyframes float {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      100% { transform: translate(30px, -30px) rotate(360deg); }
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 20vw; }
+      nav a { margin-left: 1.2rem; font-size: 0.9rem; }
+      .floating-img { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="bg-gif"></div>
+
+  <header>
+    <div class="logo">λ</div>
+    <nav>
+      <a href="">Home</a>
+      <a href="blog.html">Blog</a>
+      <a href="cases.html">Cases</a>
+      <a href="https://ama-cmfai.github.io/LAMBDA-Docs/#/">Docs</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+<!--    <div class="floating-img" id="img1">-->
+<!--      <img src="https://images.unsplash.com/photo-1518770660439-24edd4c5655c?w=800" alt="Data visualization">-->
+<!--    </div>-->
+<!--    <div class="floating-img" id="img2">-->
+<!--      <img src="https://images.unsplash.com/photo-1534664853959-37c347e77588?w=800" alt="AI agent">-->
+<!--    </div>-->
+<!--    <div class="floating-img" id="img3">-->
+<!--      <img src="https://images.unsplash.com/photo-1558655146-9f40138ed1cb?w=800" alt="Analytics">-->
+<!--    </div>-->
+
+    <h1>LAMBDA</h1>
+    <p>Large model-based, zero-code data analysis agent.<br>
+    Simplify complex data science through natural language. No code required.</p>
+
+    <div class="buttons">
+      <a href="https://github.com/AMA-CMFAI/LAMBDA" target="_blank">
+        <i class="fab fa-github"></i> GitHub
+      </a>
+      <a href="https://ama-cmfai.github.io/LAMBDA-Docs/#/" target="_blank">
+        <i class="fas fa-book"></i> Docs
+      </a>
+      <a href="https://github.com/AMA-CMFAI/LAMBDA/archive/refs/heads/main.zip" target="_blank" download>
+        <i class="fas fa-download"></i> Download
+      </a>
+    </div>
+  </section>
+
+  <!-- You can add placeholder sections later -->
+  <!-- <section id="blog">... Your technical blog posts here ...</section> -->
+  <!-- <section id="cases">... Case studies / real-world examples ...</section> -->
+
+</body>
+</html>

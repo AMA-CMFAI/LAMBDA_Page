@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LAMBDA: A Large Model Based Data Agent – StatsUpAI</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23000000%22 rx=%2250%22/><text x=%2250%22 y=%2270%22 font-size=%2280%22 text-anchor=%22middle%22 fill=%22%23ffffff%22 font-weight=%22bold%22 font-family=%22-apple-system,BlinkMacSystemFont,Segoe UI,Roboto%22>Λ</text></svg>">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23000000%22 rx=%2250%22/><text x=%2250%22 y=%2270%22 font-size=%2280%22 text-anchor=%22middle%22 fill=%22%23ffffff%22 font-weight=%22bold%22 font-family=%22-apple-system,BlinkMacSystemFont,Segoe UI,Roboto%22>Λ</text></svg>">
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --text: #e0e0e0;
+      --card: rgba(30,30,30,0.7);
+      --accent: #bb86fc; /* 添加一点点强调色 */
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+    }
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      padding: 1.5rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      background: rgba(10,10,10,0.8);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid #222;
+    }
+    .logo { font-size: 1.8rem; font-weight: 800; letter-spacing: -1px; }
+    .back { color: #aaaaaa; text-decoration: none; font-weight: 500; }
+    .back:hover { color: white; }
+
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 10rem 5% 6rem;
+    }
+    h1 {
+      font-size: 3rem;
+      font-weight: 900;
+      margin-bottom: 0.4em;
+      color: white;
+      line-height: 1.2;
+    }
+    .meta {
+      color: #888888;
+      font-size: 1rem;
+      margin-bottom: 3rem;
+      border-bottom: 1px solid #222;
+      padding-bottom: 2rem;
+    }
+    article {
+      font-size: 1.15rem;
+    }
+    article h2 {
+      color: #ffffff;
+      font-size: 1.8rem;
+      margin: 3rem 0 1.5rem;
+      border-left: 4px solid var(--accent);
+      padding-left: 1rem;
+    }
+    article h3 {
+      color: #ddd;
+      font-size: 1.4rem;
+      margin: 2rem 0 1rem;
+    }
+    article h4 {
+        color: #ccc;
+        font-size: 1.2rem;
+        margin: 1.5rem 0 0.5rem;
+        font-weight: 700;
+    }
+    article p, article li {
+      margin-bottom: 1.4em;
+      opacity: 0.92;
+    }
+    article ul {
+        margin-left: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    article code {
+      background: #1e1e1e;
+      padding: 0.2em 0.5em;
+      border-radius: 4px;
+      font-family: 'Consolas', monospace;
+      color: #ff79c6;
+    }
+    article pre {
+      background: #111;
+      padding: 1.5rem;
+      border-radius: 12px;
+      overflow-x: auto;
+      margin: 1.5em 0;
+    }
+    article img {
+        max-width: 100%;
+        border-radius: 8px;
+        margin: 2rem 0;
+        border: 1px solid #333;
+        display: block;
+    }
+    .caption {
+        font-size: 0.9rem;
+        color: #777;
+        text-align: center;
+        margin-top: -1.5rem;
+        margin-bottom: 2rem;
+    }
+    .quote-box {
+        background: #1a1a1a;
+        border-left: 4px solid #555;
+        padding: 1.5rem;
+        margin: 2rem 0;
+        border-radius: 0 8px 8px 0;
+    }
+    .expert-block {
+        margin-bottom: 2.5rem;
+    }
+    .expert-name {
+        font-weight: bold;
+        color: white;
+        font-size: 1.1rem;
+    }
+    .expert-affil {
+        font-size: 0.95rem;
+        color: #888;
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">λ Blog</div>
+    <a href="../blog.html" class="back">← Return to blog</a>
+  </header>
+
+  <main>
+
+    <article>
+  <h1>Invited Expert Discussion - "LAMBDA: A Large Model Based Data Agent"</h1>
+
+  <div class="meta">
+      <i class="far fa-calendar-alt"></i> November 24, 2025 · StatsUpAI
+  </div>
+
+  <h2>Introduction: Revolutionizing Data Analysis with AI Agents 🚀</h2>
+
+  <p>To address the high technical barriers and tedious debugging processes inherent in data analysis, a research team from <strong>The Hong Kong Polytechnic University</strong> has developed and open-sourced <strong>LAMBDA (LArge Model Based Data Agent)</strong>. LAMBDA employs a dual-agent architecture (“Programmer” and “Inspector”) to enable natural language-driven data analysis. The system supports human-in-the-loop intervention and custom knowledge integration, aiming to reconstruct the interaction paradigm in scientific research and data science education.</p>
+
+  <div class="quote-box">
+      <strong>📄 Publication:</strong><br>
+      Maojun Sun, Ruijian Han, Binyan Jiang, Houduo Qi, Defeng Sun, Yancheng Yuan, Jian Huang.<br>
+      <em>Lambda: A large model based data agent.</em><br>
+      Journal of the American Statistical Association (2025).
+  </div>
+
+  <h2>Bridging the Gap Between Statistical Logic and Code Implementation</h2>
+
+  <p>Despite the rise of AI, a significant gap remains between “knowing what to analyze” and “writing the code to do it”. For many researchers, students, and domain experts, complex data cleaning and iterative model debugging consume disproportionate amounts of time.</p>
+
+  <p>LAMBDA is designed not to replace human reasoning, but to serve as an intelligent interface. It allows users to focus on hypotheses and analytical logic, while the AI agents handle the translation into executable code and the resolution of runtime errors.</p>
+
+  <img src="https://statsupai.org/quarto_web/site/posts/figures/lambda1.png" alt="LAMBDA System Overview" onerror="this.src='https://placehold.co/800x400/222/999?text=Image:+System+Overview+(Please+Update+Src)'">
+  <p class="caption">Figure 1: LAMBDA System Overview</p>
+
+  <h2>System Architecture: Dual-Agent Collaboration with Self-Correction 🤖</h2>
+
+  <p>Unlike simple “prompt-to-code” tools, LAMBDA utilizes a robust <strong>Dual-Agent Collaboration Mechanism</strong>:</p>
+
+  <ul>
+    <li><strong>The Programmer Agent</strong>: Interprets user instructions, analyzes data characteristics, and generates the initial analysis code.</li>
+    <li><strong>The Inspector Agent</strong>: Monitors execution. Upon encountering errors, it analyzes the traceback, generates specific modification suggestions, and guides the Programmer to iteratively refine the code until execution is successful.</li>
+  </ul>
+
+  <p>This process mimics human debugging workflows, ensuring high success rates in complex tasks while allowing users to view and intervene in the code at any stage.</p>
+
+  <img src="https://statsupai.org/quarto_web/site/posts/figures/lambda2.png" alt="Dual-Agent Collaboration Mechanism" onerror="this.src='https://placehold.co/800x400/222/999?text=Image:+Dual-Agent+Collaboration+(Please+Update+Src)'">
+
+  <h2>The Knowledge Integration Mechanism 🧠</h2>
+
+  <p>A major challenge for general LLMs is accurately invoking specialized domain algorithms. LAMBDA addresses this via a <strong>Knowledge Integration Mechanism</strong>. Users can encapsulate custom models and algorithms as key-value pairs within a knowledge base. The system supports two integration modes:</p>
+
+  <ul>
+    <li><strong>Full Mode</strong>: Injects complete code into the context for comprehensive model understanding.</li>
+    <li><strong>Core Mode</strong>: Injects only function descriptions while executing complex logic on the backend, preventing context overflow.</li>
+  </ul>
+
+  <p>This allows LAMBDA to align generated code with specific user intents (e.g., correcting loss function discrepancies) more effectively than standard plugin-based systems.</p>
+
+  <img src="https://statsupai.org/quarto_web/site/posts/figures/lambda3.png" alt="Knowledge Integration Mechanism" onerror="this.src='https://placehold.co/800x400/222/999?text=Image:+Knowledge+Integration+(Please+Update+Src)'">
+
+  <h2>Versatility and Performance</h2>
+
+  <h3>📊 Tabular Data</h3>
+  <p>Achieves modeling performance comparable to human experts in classification and regression tasks.</p>
+  <img src="https://statsupai.org/quarto_web/site/posts/figures/lambda4.png" alt="Tabular Data Performance" onerror="this.src='https://placehold.co/800x300/222/999?text=Image:+Tabular+Data+Performance'">
+
+  <h3>🖼️ Unstructured Data</h3>
+  <p>Automated invocation of CNNs and Transformers for image classification (e.g., MNIST) and text analysis.</p>
+  <img src="https://statsupai.org/quarto_web/site/posts/figures/lambda5.png" alt="Unstructured Data Analysis" onerror="this.src='https://placehold.co/800x300/222/999?text=Image:+Unstructured+Data+Analysis'">
+  <img src="https://statsupai.org/quarto_web/site/posts/figures/lambda6.png" alt="Unstructured Data Analysis" onerror="this.src='https://placehold.co/800x300/222/999?text=Image:+Unstructured+Data+Analysis'">
+
+  <h3>🧬 Complex Scenarios</h3>
+  <p>Effective handling of high-dimensional genomic data and missing value imputation.</p>
+  <img src="https://statsupai.org/quarto_web/site/posts/figures/lambda7.png" alt="Complex Scenarios" onerror="this.src='https://placehold.co/800x300/222/999?text=Image:+Complex+Scenarios'">
+  <img src="https://statsupai.org/quarto_web/site/posts/figures/lambda8.png" alt="Complex Scenarios" onerror="this.src='https://placehold.co/800x300/222/999?text=Image:+Complex+Scenarios'">
+
+  <h3>🔧 Knowledge Integration</h3>
+  <p>LAMBDA can actively correct the code of the knowledge base to align with human intent, which is difficult for existing plugin-based agent systems to achieve.</p>
+  <img src="https://statsupai.org/quarto_web/site/posts/figures/lambda9.png">
+  <img src="https://statsupai.org/quarto_web/site/posts/figures/lambda10.png">
+
+  <h2>Value in Education and Research</h2>
+
+  <p>LAMBDA transforms “code” from a barrier into a transparent utility. It supports the export of complete analysis reports and <code>.ipynb</code> files, making it an ideal tool for reproducible research.</p>
+
+  <p>In educational settings, it allows students to focus on statistical concepts and problem-solving logic rather than syntax errors, fostering a “Problem-Modeling-Explanation” learning approach.</p>
+  <img src="https://statsupai.org/quarto_web/site/posts/figures/lambda11.png">
+  <img src="https://statsupai.org/quarto_web/site/posts/figures/lambda12.png">
+
+  <h2>Discussions: Perspectives and Future Directions</h2>
+
+  <p>We invited several prominent scholars in statistics and data science to provide comments and engage in a brainstorming discussion. Their perspectives are summarized below.</p>
+
+  <div class="expert-block">
+      <div class="expert-name">Professor David Donoho</div>
+      <span class="expert-affil">Stanford University</span>
+      <p>Professor Donoho describes the release of LAMBDA as arriving at a “pivotal moment” for the discipline. This is an “impressive academic project” that shows how far agentic AI has come in replicating routine data analysis tasks. He suggests establishing rigorous “Chatbot Arena-style” benchmarks specifically designed to evaluate the scientific validity and reproducibility of such agents.</p>
+  </div>
+
+  <div class="expert-block">
+      <div class="expert-name">Professor Xiao-Li Meng</div>
+      <span class="expert-affil">Harvard University</span>
+      <p>Professor Meng welcomes LAMBDA as a “refreshing article” relevant to “systems thinking” in data science. He appreciates the “Human-in-the-Loop” design, noting that it positions AI as a partner to “build and enhance our mindware”. He proposes the development of a “Data Minder” agent dedicated to data quality and provenance.</p>
+  </div>
+
+  <div class="expert-block">
+      <div class="expert-name">Professor Fan Zhou and Professor Bang Liu</div>
+      <span class="expert-affil">Shanghai University of Finance and Economics / University of Montreal</span>
+      <p>They commend LAMBDA for “substantially lowering the barrier to entry” and envision a "Self-Evolving Agent" with long-term memory that can accumulate successful code snippets and problem-solving strategies over time.</p>
+  </div>
+
+  <div class="expert-block">
+      <div class="expert-name">Professor Xihong Lin</div>
+      <span class="expert-affil">Harvard University</span>
+      <p>Professor Lin lauds the system's practical utility and versatility across diverse datasets (genomic, image, text). She suggests extending the framework with an “Analysis-Planning Agent” to collaborate with users on scientifically valid study designs.</p>
+  </div>
+
+  <div class="expert-block">
+      <div class="expert-name">Mr. Mert Yuksekgonul and Professor James Zou</div>
+      <span class="expert-affil">Stanford University</span>
+      <p>They frame LAMBDA as an “important shift” towards systems capable of handling the scientific workflow. They propose a research agenda focused on Collaborative Agents (like “CollabLLM”) that are explicitly trained to ask clarifying questions when faced with ambiguity.</p>
+  </div>
+
+  <div class="expert-block">
+      <div class="expert-name">Dr. Sammi Tang and Dr. Xuewei Wang</div>
+      <span class="expert-affil">Astellas Pharma</span>
+      <p>They value the “Knowledge Integration Mechanism” for enabling domain adaptability. They recommend extending support for the R programming language and refining retrieval mechanisms for complex methodologies like sparse PCA.</p>
+  </div>
+
+  <h2>Conclusion</h2>
+
+  <p>LAMBDA represents a foundational step toward intelligent, collaborative data analysis. However, the commentaries suggest its true potential lies not just in automating code, but in evolving into a system that plans, reasons, and teaches—transforming AI from a mere tool into a genuine partner in scientific inquiry.</p>
+
+  <h2>🌐 Open Source and Collaboration</h2>
+  <p>LAMBDA is now fully open-source. We invite researchers, educators, and developers to explore the system and contribute to its development.</p>
+
+  <p>
+<!--    <a href="https://github.com/AMA-CMFAI/LAMBDA" target="_blank"><i class="fab fa-github"></i> GitHub Repository</a><br>-->
+    <a href="https://www.tandfonline.com/doi/full/10.1080/01621459.2025.2510000" target="_blank"><i class="far fa-file-alt"></i> Research Paper</a><br>
+    <a href="https://statsupai.org/quarto_web/site/posts/LAMBDA.html" target="_blank"><i class="fas fa-file-alt"></i> StatsUpAI</a>
+  </p>
+
+</article>
+  </main>
+
+</body>
+</html>
