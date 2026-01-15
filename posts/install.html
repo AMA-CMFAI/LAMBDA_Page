@@ -9,9 +9,23 @@
   <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23000000%22 rx=%2250%22/><text x=%2250%22 y=%2270%22 font-size=%2280%22 text-anchor=%22middle%22 fill=%22%23ffffff%22 font-weight=%22bold%22 font-family=%22-apple-system,BlinkMacSystemFont,Segoe UI,Roboto%22>Λ</text></svg>">
   <style>
     :root {
+      /* Dark theme (default) */
       --bg: #0a0a0a;
       --text: #e0e0e0;
       --card: rgba(30,30,30,0.7);
+      --border: #222;
+      --code-bg: #1e1e1e;
+      --header-bg: rgba(10,10,10,0.8);
+    }
+
+    [data-theme="light"] {
+      /* Light theme */
+      --bg: #f5f5f7;
+      --text: #1d1d1f;
+      --card: rgba(255,255,255,0.9);
+      --border: rgba(0,0,0,0.1);
+      --code-bg: #f0f0f0;
+      --header-bg: rgba(245,245,247,0.9);
     }
     * { margin:0; padding:0; box-sizing:border-box; }
     body {
@@ -19,6 +33,7 @@
       background: var(--bg);
       color: var(--text);
       line-height: 1.8;
+      transition: background 0.3s, color 0.3s;
     }
     header {
       position: fixed;
@@ -28,12 +43,40 @@
       justify-content: space-between;
       align-items: center;
       z-index: 100;
-      background: rgba(10,10,10,0.8);
+      background: var(--header-bg);
       backdrop-filter: blur(10px);
+      transition: background 0.3s;
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
     }
     .logo { font-size: 1.8rem; font-weight: 800; letter-spacing: -1px; }
-    .back { color: #aaaaaa; text-decoration: none; font-weight: 500; }
-    .back:hover { color: white; }
+    .theme-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text);
+      font-size: 1.2rem;
+      padding: 0.5rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      opacity: 0.7;
+    }
+    .theme-toggle:hover {
+      opacity: 1;
+      background: var(--card);
+    }
+    .theme-toggle .moon-icon { display: none; }
+    [data-theme="light"] .theme-toggle .sun-icon { display: none; }
+    [data-theme="light"] .theme-toggle .moon-icon { display: block; }
+    .header-right { display: flex; align-items: center; gap: 1.5rem; }
+    .back { color: var(--text); text-decoration: none; font-weight: 500; opacity: 0.8; transition: opacity 0.3s; }
+    .back:hover { opacity: 1; }
 
     main {
       max-width: 900px;
@@ -44,10 +87,11 @@
       font-size: 3.2rem;
       font-weight: 900;
       margin-bottom: 0.4em;
-      color: white;
+      color: var(--text);
     }
     .meta {
-      color: #888888;
+      color: var(--text);
+      opacity: 0.6;
       font-size: 1rem;
       margin-bottom: 3rem;
     }
@@ -55,7 +99,7 @@
       font-size: 1.15rem;
     }
     article h2, article h3 {
-      color: #ffffff;
+      color: var(--text);
       margin: 2.5rem 0 1rem;
     }
     article p, article li {
@@ -63,13 +107,13 @@
       opacity: 0.92;
     }
     article code {
-      background: #1e1e1e;
+      background: var(--code-bg);
       padding: 0.2em 0.5em;
       border-radius: 4px;
       font-family: 'Consolas', monospace;
     }
     article pre {
-      background: #111;
+      background: var(--code-bg);
       padding: 1.5rem;
       border-radius: 12px;
       overflow-x: auto;
@@ -80,8 +124,16 @@
 <body>
 
   <header>
-    <div class="logo">λ Blog</div>
-    <a href="../blog.html" class="back">← Return the blog list</a>
+    <div class="header-left">
+      <div class="logo">λ Blog</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <i class="fas fa-sun sun-icon"></i>
+        <i class="fas fa-moon moon-icon"></i>
+      </button>
+    </div>
+    <div class="header-right">
+      <a href="../blog.html" class="back">← Return the blog list</a>
+    </div>
   </header>
 
   <main>
@@ -261,6 +313,28 @@ streaming: True</code></pre>
 <!--  <p>Next article: Deep Dive into LAMBDA’s Dual-Agent System – How Programmer + Inspector Achieve Self-Correction and High Accuracy.</p>-->
 </article>
   </main>
+
+<script>
+  (function() {
+    const themeToggle = document.getElementById('themeToggle');
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    if (savedTheme) {
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    } else if (!prefersDark) {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+
+    themeToggle.addEventListener('click', function() {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+    });
+  })();
+</script>
 
 </body>
 </html>
