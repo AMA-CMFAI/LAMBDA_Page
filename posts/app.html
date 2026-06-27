@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LAMBDA Web App Is Now Available – Free to use</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23000000%22 rx=%2250%22/><text x=%2250%22 y=%2270%22 font-size=%2280%22 text-anchor=%22middle%22 fill=%22%23ffffff%22 font-weight=%22bold%22 font-family=%22-apple-system,BlinkMacSystemFont,Segoe UI,Roboto%22>Λ</text></svg>">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23000000%22 rx=%2250%22/><text x=%2250%22 y=%2270%22 font-size=%2280%22 text-anchor=%22middle%22 fill=%22%23ffffff%22 font-weight=%22bold%22 font-family=%22-apple-system,BlinkMacSystemFont,Segoe UI,Roboto%22>Λ</text></svg>">
+  <style>
+    :root {
+      /* Dark theme (default) */
+      --bg: #0a0a0a;
+      --text: #e0e0e0;
+      --card: rgba(30,30,30,0.7);
+      --border: #222;
+      --code-bg: #1e1e1e;
+      --header-bg: rgba(10,10,10,0.8);
+      --accent: #bb86fc;
+      --quote-bg: #1a1a1a;
+    }
+
+    [data-theme="light"] {
+      /* Light theme */
+      --bg: #f5f5f7;
+      --text: #1d1d1f;
+      --card: rgba(255,255,255,0.9);
+      --border: rgba(0,0,0,0.1);
+      --code-bg: #f0f0f0;
+      --header-bg: rgba(245,245,247,0.9);
+      --accent: #007aff;
+      --quote-bg: #ebebeb;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+      transition: background 0.3s, color 0.3s;
+    }
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      padding: 1.5rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      background: var(--header-bg);
+      backdrop-filter: blur(10px);
+      transition: background 0.3s;
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+    .logo { font-size: 1.8rem; font-weight: 800; letter-spacing: -1px; }
+    .theme-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text);
+      font-size: 1.2rem;
+      padding: 0.5rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      opacity: 0.7;
+    }
+    .theme-toggle:hover {
+      opacity: 1;
+      background: var(--card);
+    }
+    .theme-toggle .moon-icon { display: none; }
+    [data-theme="light"] .theme-toggle .sun-icon { display: none; }
+    [data-theme="light"] .theme-toggle .moon-icon { display: block; }
+    .header-right { display: flex; align-items: center; gap: 1.5rem; }
+    .back { color: var(--text); text-decoration: none; font-weight: 500; opacity: 0.8; transition: opacity 0.3s; }
+    .back:hover { opacity: 1; }
+
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 10rem 5% 6rem;
+    }
+    h1 {
+      font-size: 3rem;
+      font-weight: 900;
+      margin-bottom: 0.4em;
+      color: var(--text);
+      line-height: 1.2;
+    }
+    .meta {
+      color: var(--text);
+      opacity: 0.6;
+      font-size: 1rem;
+      margin-bottom: 3rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 2rem;
+    }
+    article {
+      font-size: 1.15rem;
+    }
+    article h2 {
+      color: var(--text);
+      font-size: 1.8rem;
+      margin: 3rem 0 1.5rem;
+      border-left: 4px solid var(--accent);
+      padding-left: 1rem;
+    }
+    article h3 {
+      color: var(--text);
+      font-size: 1.4rem;
+      margin: 2rem 0 1rem;
+    }
+    article h4 {
+      color: var(--text);
+      font-size: 1.2rem;
+      margin: 1.5rem 0 0.5rem;
+      font-weight: 700;
+    }
+    article p, article li {
+      margin-bottom: 1.4em;
+      opacity: 0.92;
+    }
+    article ul {
+      margin-left: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    article code {
+      background: var(--code-bg);
+      padding: 0.2em 0.5em;
+      border-radius: 4px;
+      font-family: 'Consolas', monospace;
+    }
+    article pre {
+      background: var(--code-bg);
+      padding: 1.5rem;
+      border-radius: 12px;
+      overflow-x: auto;
+      margin: 1.5em 0;
+    }
+    article img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 2rem 0;
+      border: 1px solid var(--border);
+      display: block;
+    }
+    .caption {
+      font-size: 0.9rem;
+      color: var(--text);
+      opacity: 0.6;
+      text-align: center;
+      margin-top: -1.5rem;
+      margin-bottom: 2rem;
+    }
+    .quote-box {
+      background: var(--quote-bg);
+      border-left: 4px solid var(--border);
+      padding: 1.5rem;
+      margin: 2rem 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .expert-block {
+      margin-bottom: 2.5rem;
+    }
+    .expert-name {
+      font-weight: bold;
+      color: var(--text);
+      font-size: 1.1rem;
+    }
+    .expert-affil {
+      font-size: 0.95rem;
+      color: var(--text);
+      opacity: 0.6;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-left">
+      <div class="logo">λ Blog</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <i class="fas fa-sun sun-icon"></i>
+        <i class="fas fa-moon moon-icon"></i>
+      </button>
+    </div>
+    <div class="header-right">
+      <a href="../blog.html" class="back">← Return to blog</a>
+    </div>
+  </header>
+
+  <main>
+
+    <article>
+  <h1>LAMBDA Web App Is Now Available – Free to Use</h1>
+
+  <div class="meta">
+      <i class="far fa-calendar-alt"></i> June 27, 2026
+  </div>
+
+  <video controls width="100%" poster="../sources/images/lambdavideo.png">
+    <source src="https://www.polyu.edu.hk/ama/cmfai/files/lambda/videos/lambda_demo26_en.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  <p class="caption">Demo Video: LAMBDA Web App</p>
+
+<!--  <h2>AI-Powered Statistics and Data Science in Your Browser</h2>-->
+
+  <p><strong>LAMBDA</strong> is an AI agent for statistics and data science. By simply uploading a dataset, users can automatically perform exploratory data analysis, data visualization, statistical modeling, and report generation. During the analysis, all intermediate results and visualizations are updated in real time. LAMBDA also automatically generates publication-quality PDF reports, Jupyter Notebooks, and editable PowerPoint presentations.</p>
+
+  <div class="quote-box">
+      <strong>👉 Try it now:</strong><br>
+      <a href="https://lambda.com.ai" target="_blank">https://lambda.com.ai</a>
+  </div>
+
+  <p>Developed by the <strong>Research Centre for the Mathematical Foundations of Generative AI</strong>, The Hong Kong Polytechnic University (PolyU), the LAMBDA Web App is now publicly available. No local installation or environment configuration is required—simply access the platform through your web browser.</p>
+
+  <p>In practical data analysis, tasks such as data cleaning, exploratory analysis, visualization, statistical modeling, report writing, and presentation preparation are often performed using multiple software tools. This workflow can be time-consuming and presents a steep learning curve for users without programming or data analysis experience.</p>
+
+  <p>LAMBDA provides an integrated AI-powered environment that brings these tasks into a unified workflow. Users with little or no background in statistics, programming, or data science can generate professional data analysis reports within minutes.</p>
+
+  <h2>Key Features</h2>
+
+  <h3>1. Automatic Data Exploration</h3>
+
+  <p>With <strong>Auto Exploration</strong>, users only need to upload a dataset—no prompts or coding are required. LAMBDA automatically explores the data, identifies important patterns, performs statistical analyses, and generates a comprehensive report that helps users quickly understand the characteristics of their data and the key analytical findings.</p>
+
+  <img src="../sources/images/autoexp.png" alt="Auto Exploration" onerror="this.src='https://placehold.co/900x506/222/999?text=Figure+1:+Auto+Exploration'" style="width: 80%">
+  <p class="caption">Figure 1. Auto Exploration</p>
+
+  <h3>2. Transparent Workflow with Real-Time Visualization</h3>
+
+  <p>LAMBDA provides a user-friendly interface that continuously displays generated visualizations, intermediate results, and analysis artifacts while a task is running. Users can monitor the progress of their analysis, inspect generated figures and reports, and download or edit the generated outputs.</p>
+
+  <p>Rather than presenting only the final conclusions, LAMBDA emphasizes transparency throughout the analytical workflow. Users can understand how the analysis evolves, improving both interpretability and confidence in the generated results.</p>
+
+  <img src="../sources/images/files.png" alt="Real-Time Analysis Visualization" onerror="this.src='https://placehold.co/900x506/222/999?text=Figure+2:+Real-Time+Analysis+Visualization'">
+  <p class="caption">Figure 2. Real-Time Analysis Visualization</p>
+
+  <h3>3. Reproducible Analysis via Jupyter Notebook</h3>
+
+  <p>To support reproducible research, LAMBDA automatically generates a Jupyter Notebook (<code>.ipynb</code>) upon completion of each analysis. Users can also export the notebook manually.</p>
+
+  <p>The notebook preserves the complete workflow, including data preprocessing, visualization, statistical analyses, and generated code. Users can reproduce the analysis, inspect each step, and further customize or extend the workflow for research, teaching, or collaborative projects.</p>
+
+  <img src="../sources/images/display_files.png" alt="Generated Analysis Files" onerror="this.src='https://placehold.co/900x506/222/999?text=Figure+3:+Generated+Analysis+Files'">
+  <p class="caption">Figure 3. Generated Analysis Files</p>
+
+  <h3>4. GitHub Integration</h3>
+
+  <p>LAMBDA integrates directly with GitHub repositories. Generated source code, LaTeX documents, notebooks, and other analysis artifacts can be synchronized to a user's GitHub repository, making it easy to manage versions, collaborate with team members, and integrate LAMBDA into existing development workflows.</p>
+
+  <img src="../sources/images/congithub.png" alt="GitHub Integration" onerror="this.src='https://placehold.co/900x506/222/999?text=Figure+4:+GitHub+Integration'">
+  <p class="caption">Figure 4. GitHub Integration</p>
+
+  <h3>5. Automatic Report and Presentation Generation</h3>
+
+  <p>Upon completion of the analysis, LAMBDA automatically organizes the results into a professionally formatted PDF report or an editable PowerPoint presentation. The system automatically structures the content, arranges figures, and formats the document, allowing users to directly use the generated materials for coursework, project reports, business presentations, or academic presentations.</p>
+
+  <img src="../sources/images/report.png" alt="PDF Analysis Report" onerror="this.src='https://placehold.co/900x506/222/999?text=Figure+5:+PDF+Analysis+Report'">
+  <p class="caption">Figure 5. PDF Analysis Report</p>
+
+  <img src="../sources/images/pptx.png" alt="Editable PowerPoint Presentation" onerror="this.src='https://placehold.co/900x506/222/999?text=Figure+6:+Editable+PowerPoint+Presentation'">
+  <p class="caption">Figure 6. Editable PowerPoint Presentation</p>
+
+  <h2>Try LAMBDA</h2>
+
+  <p>We welcome you to try LAMBDA and explore its capabilities.</p>
+
+  <div class="quote-box">
+      <strong>🌐 LAMBDA Web App:</strong><br>
+      <a href="https://lambda.com.ai" target="_blank">https://lambda.com.ai</a>
+  </div>
+
+  <h2>Related Publications</h2>
+
+  <ol>
+    <li>
+      <strong>LAMBDA: A Large Model Based Data Agent.</strong><br>
+      Maojun Sun, Ruijian Han, Binyan Jiang, Houduo Qi, Defeng Sun, Yancheng Yuan & Jian Huang.<br>
+      <em>Journal of the American Statistical Association</em>, 121, 1–13, 2026.
+    </li>
+    <li>
+      <strong>Discussions of “LAMBDA: A Large Model Based Data Agent”.</strong><br>
+      David Donoho, Xinhong Lin, Xiao-Li Meng, Xuewei Wang & Rui (Sammi) Tang, Bang Liu, Run Yang & Fan Zhou, James Zou & Mert Yuksekgonul.<br>
+      <em>Journal of the American Statistical Association</em>, 553, 14–35, 2026.
+    </li>
+    <li>
+      <strong>Rejoinder to the Discussions on “LAMBDA: A Large Model Based Data Agent”.</strong><br>
+      Maojun Sun, Ruijian Han, Binyan Jiang, Houduo Qi, Defeng Sun, Yancheng Yuan & Jian Huang.<br>
+      <em>Journal of the American Statistical Association</em>, 121, 36–43, 2026.
+    </li>
+  </ol>
+
+</article>
+  </main>
+
+<script>
+  (function() {
+    const themeToggle = document.getElementById('themeToggle');
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    if (savedTheme) {
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    } else if (!prefersDark) {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+
+    themeToggle.addEventListener('click', function() {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+    });
+  })();
+</script>
+
+</body>
+</html>
