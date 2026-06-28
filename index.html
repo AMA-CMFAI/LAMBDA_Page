@@ -95,11 +95,10 @@
             gap: 2rem;
         }
 
-        /* The logo is now an image.  Set a consistent height and allow the width to adjust
-           automatically to preserve aspect ratio. */
         .logo img {
             height: 2.5rem;
             width: auto;
+            display: block;
         }
 
         .theme-toggle {
@@ -289,9 +288,7 @@
 
 <header>
     <div class="header-left">
-        <!-- Use the new logo image instead of a lambda character -->
-        <!-- Update path for the embedded logo image; file will live in the repo root as logo.png -->
-        <div class="logo"><img src="logo.png" alt="LAMBDA logo"></div>
+        <div class="logo"><img src="sources/images/logo.png" alt="LAMBDA logo"></div>
         <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
             <i class="fas fa-sun sun-icon"></i>
             <i class="fas fa-moon moon-icon"></i>
@@ -300,8 +297,7 @@
     <nav>
         <a href="">Home</a>
         <a href="blog.html">Blog</a>
-        <a href="cases.html">Cases</a>
-        <a href="https://ama-cmfai.github.io/LAMBDA-Docs/#/">Docs</a>
+        <a href="https://lambda.com.ai/cases">Cases</a>
     </nav>
 </header>
 
@@ -319,9 +315,6 @@
         </a>
         <a href="https://github.com/AMA-CMFAI/LAMBDA" target="_blank">
             <i class="fab fa-github"></i> GitHub
-        </a>
-        <a href="https://ama-cmfai.github.io/LAMBDA-Docs/#/" target="_blank">
-            <i class="fas fa-book"></i> Docs
         </a>
         <!-- Removed the Download button as requested -->
     </div>
