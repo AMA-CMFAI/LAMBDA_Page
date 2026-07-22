@@ -70,7 +70,7 @@ nav a:hover, nav a.active { color: var(--text); }
 .manual-content > p:nth-of-type(6),
 .manual-content > p:nth-of-type(7) { color: var(--muted); }
 .manual-content > p:nth-of-type(2) img { width: 5rem; border: 0; }
-.manual-content img { max-width: 100%; height: auto; border: 1px solid var(--border); border-radius: .45rem; }
+.manual-content img { width: auto; max-width: 100%; height: auto; border: 1px solid var(--border); border-radius: .45rem; }
 .manual-content .center { text-align: center; margin: 1.75rem 0 2.5rem; }
 .manual-content .tableofcontents {
   margin: 2rem 0 3.5rem;

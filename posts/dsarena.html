@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DSArena: One Prompt, Multiple Models Working for You - LAMBDA</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="icon" type="image/png" href="../sources/images/logo.png" />
+  <link rel="apple-touch-icon" type="image/png" href="../sources/images/logo.png" />
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --text: #e0e0e0;
+      --card: rgba(30, 30, 30, 0.7);
+      --border: #2b2b2b;
+      --header-bg: rgba(10, 10, 10, 0.8);
+      --accent: #bb86fc;
+      --muted: #999999;
+    }
+
+    [data-theme="light"] {
+      --bg: #f5f5f7;
+      --text: #1d1d1f;
+      --card: rgba(255, 255, 255, 0.9);
+      --border: rgba(0, 0, 0, 0.12);
+      --header-bg: rgba(245, 245, 247, 0.9);
+      --accent: #007aff;
+      --muted: #6e6e73;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.8;
+      overflow-wrap: anywhere;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    header {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 5%;
+      background: var(--header-bg);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: background 0.3s;
+    }
+
+    .header-left,
+    .header-right {
+      display: flex;
+      align-items: center;
+    }
+
+    .header-left {
+      gap: 2rem;
+    }
+
+    .logo img {
+      display: block;
+      width: auto;
+      height: 2.5rem;
+    }
+
+    .theme-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem;
+      border: 0;
+      border-radius: 50%;
+      background: none;
+      color: var(--text);
+      cursor: pointer;
+      font-size: 1.2rem;
+      opacity: 0.7;
+      transition: opacity 0.3s, background 0.3s;
+    }
+
+    .theme-toggle:hover {
+      background: var(--card);
+      opacity: 1;
+    }
+
+    .theme-toggle .moon-icon {
+      display: none;
+    }
+
+    [data-theme="light"] .theme-toggle .sun-icon {
+      display: none;
+    }
+
+    [data-theme="light"] .theme-toggle .moon-icon {
+      display: block;
+    }
+
+    .back {
+      color: var(--text);
+      font-weight: 500;
+      opacity: 0.8;
+      text-decoration: none;
+      transition: opacity 0.3s;
+    }
+
+    .back:hover {
+      opacity: 1;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 10rem 5% 6rem;
+    }
+
+    h1 {
+      margin-bottom: 0.4em;
+      color: var(--text);
+      font-size: 3rem;
+      font-weight: 900;
+      line-height: 1.25;
+    }
+
+    .meta {
+      margin-bottom: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    article {
+      font-size: 1.15rem;
+    }
+
+    article h2 {
+      margin: 3rem 0 1.5rem;
+      padding-left: 1rem;
+      border-left: 4px solid var(--accent);
+      color: var(--text);
+      font-size: 1.8rem;
+      line-height: 1.45;
+    }
+
+    article p {
+      margin-bottom: 1.4em;
+      opacity: 0.92;
+    }
+
+    .prompt {
+      margin: 1.5rem 0 2rem;
+      padding: 1.4rem 1.5rem;
+      border-left: 4px solid var(--accent);
+      background: var(--card);
+      font-weight: 600;
+    }
+
+    .article-image {
+      display: block;
+      width: auto;
+      max-width: 100%;
+      height: auto;
+      max-height: 70vh;
+      margin: 2rem auto;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      object-fit: contain;
+    }
+
+    .cta {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      border-left: 4px solid var(--accent);
+      background: var(--card);
+    }
+
+    .cta a {
+      color: var(--accent);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .cta a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 640px) {
+      header {
+        padding: 1rem 5%;
+      }
+
+      .header-left {
+        gap: 1rem;
+      }
+
+      .logo img {
+        height: 2rem;
+      }
+
+      .back {
+        font-size: 0.9rem;
+      }
+
+      main {
+        padding-top: 8rem;
+      }
+
+      h1 {
+        font-size: 2.2rem;
+      }
+
+      article {
+        font-size: 1.05rem;
+      }
+
+      article h2 {
+        font-size: 1.5rem;
+      }
+
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-left">
+      <div class="logo"><img src="../sources/images/logo.png" alt="LAMBDA logo" /></div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <i class="fas fa-sun sun-icon"></i>
+        <i class="fas fa-moon moon-icon"></i>
+      </button>
+    </div>
+    <div class="header-right">
+      <a href="../blog.html" class="back">Return to blog</a>
+    </div>
+  </header>
+
+  <main>
+    <article>
+      <h1>DSArena: One Prompt, Multiple Models Working for You</h1>
+      <div class="meta"><i class="far fa-calendar-alt"></i> July 22, 2026</div>
+
+      <h2>Have you encountered these problems when analyzing data?</h2>
+      <p><strong>GPT, Claude, DeepSeek... Which one is best suited to my task?</strong></p>
+      <p>When one model produces unsatisfactory results, you have to switch models, upload the files again, and describe your requirements all over again. Even when the analysis looks reasonable, it can be difficult to know whether a better approach exists.</p>
+      <p>Now you can use the all-new <strong>DSArena</strong> directly in <strong>LAMBDA</strong>. One prompt puts multiple models to work for you.</p>
+
+      <!-- Add the image path to the src attribute. -->
+      <img src="../sources/images/dsarena1.png" class="article-image" alt="DSArena overview" />
+
+
+      <h2>What is DSArena?</h2>
+      <p><strong>DSArena (Data Science Arena)</strong> is LAMBDA's multi-model data science workflow. Simply upload your data to LAMBDA and enter your request once. Multiple large language models will begin working simultaneously, analyzing your problem independently and producing their own complete results. To enter this workflow, visit the LAMBDA Web App and select DSArena.</p>
+
+      <!-- Add the image path to the src attribute. -->
+      <img src="../sources/images/dsarena2.png" class="article-image" alt="Selecting DSArena in the LAMBDA Web App" />
+
+      <p>Whether you are preparing data, analyzing Excel or CSV files, creating charts, building models, or generating reports, there is no need to move back and forth between platforms or repeatedly copy the same instructions.</p>
+      <p>For example, you can simply tell DSArena:</p>
+      <div class="prompt">Analyze this sales dataset, identify the main reasons for the decline in sales, and generate a complete analysis report.</div>
+      <p>Multiple models will then complete the task independently. You can review the analyses, charts, code, and files they produce, select the result you prefer, and specify why you chose it.</p>
+
+      <!-- Add the image path to the src attribute. -->
+      <img src="../sources/images/dsarena3.png" class="article-image" alt="Comparing data analysis results in DSArena" />
+
+      <p>After choosing your preferred result, you can see which model is better suited to your task:</p>
+
+      <!-- Add the image path to the src attribute. -->
+      <img src="../sources/images/dsarena4.png" class="article-image" alt="DSArena model comparison result" />
+
+      <p>DSArena currently includes models from the GPT-5.6 series, Claude Sonnet 5, Gemini 3.1 Pro, and more. Try it free for a limited time.</p>
+      <p>Log in to LAMBDA now and experience DSArena:</p>
+
+      <!-- Add the image path to the src attribute. -->
+      <img src="../sources/images/qrcode_en.png" class="article-image" alt="Accessing DSArena in LAMBDA" />
+
+      <div class="cta">
+        <a href="https://lambda.com.ai/dsarena" target="_blank" rel="noopener noreferrer">-> View the Leaderboard</a>
+      </div>
+    </article>
+  </main>
+
+  <script>
+    (function() {
+      const themeToggle = document.getElementById('themeToggle');
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } else if (!prefersDark) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+
+      themeToggle.addEventListener('click', function() {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+      });
+    })();
+  </script>
+</body>
+</html>
